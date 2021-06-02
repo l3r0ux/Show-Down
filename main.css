@@ -4,23 +4,23 @@
 }
 
 body {
-    background: url(/images/cinema.jpg) no-repeat fixed center;
+    background: url(images/cinema.jpg) no-repeat fixed center;
     background-size: cover;
     backdrop-filter: blur(4px);
 }
 
-main {
+/* main {
     height: 100vh;
-}
+} */
 
 /* Bootstrap dont have these heighting intervals */
 .header-container {
     height: 15%;
 }
 
-.movies-container {
+/* .movies-container {
     height: 85%;
-}
+} */
 
 .vs {
     color: #771b1f;
@@ -28,28 +28,29 @@ main {
 
 /* left and right collums 100% initially */
 .left {
-    height: 100%;
+    height: 85vh;
 }
 
 .right {
-    height: 100%;
+    height: 85vh;
 }
 
 .movie-search {
     color: #0d0f13 !important;
     position: absolute;
     top: 50%;
-    left: 0;
+    left: 50%;
     background-color: #b8b4ac;
-    transform: translateY(-50%);
+    transform: translate(-50%, -50%);
     transition: all ease 500ms;
     box-shadow: 0 0 10px 0 #771b1f;
+    width: 90%;
 }
 
 /* When add movie and its details added to the page, add this class to transform input up */
 .movie-present {
     top: 0;
-    transform: translateY(0);
+    transform: translate(-50%, 0);
 }
 .movie-search:focus {
     box-shadow: 0 0 20px 0 #771b1f;
