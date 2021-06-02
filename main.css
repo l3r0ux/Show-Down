@@ -2,9 +2,15 @@
     box-sizing: border-box;
 }
 
-h1 {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
+/* Temporary to test layout */
+/* main {
+    height: 100vh;
+} */
+
+.left {
+    height: 80vh;
+}
+
+.right {
+    height: 80vh;
 }
