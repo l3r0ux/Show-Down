@@ -1,16 +1,70 @@
 * {
     box-sizing: border-box;
+    color: #c7c5bf;
 }
 
-/* Temporary to test layout */
-/* main {
-    height: 100vh;
-} */
+body {
+    background: url(/images/cinema.jpg) no-repeat fixed center;
+    background-size: cover;
+    backdrop-filter: blur(4px);
+}
 
+main {
+    height: 100vh;
+}
+
+/* Bootstrap dont have these heighting intervals */
+.header-container {
+    height: 15%;
+}
+
+.movies-container {
+    height: 85%;
+}
+
+.vs {
+    color: #771b1f;
+}
+
+/* left and right collums 100% initially */
 .left {
-    height: 80vh;
+    height: 100%;
 }
 
 .right {
-    height: 80vh;
+    height: 100%;
 }
+
+.movie-search {
+    color: #0d0f13 !important;
+    position: absolute;
+    top: 50%;
+    left: 0;
+    background-color: #b8b4ac;
+    transform: translateY(-50%);
+    transition: all ease 500ms;
+    box-shadow: 0 0 10px 0 #771b1f;
+}
+
+/* When add movie and its details added to the page, add this class to transform input up */
+.movie-present {
+    top: 0;
+    transform: translateY(0);
+}
+.movie-search:focus {
+    box-shadow: 0 0 20px 0 #771b1f;
+    background-color: #b8b4ac;
+}
+
+/* COLOR PALLET gotten from background image */
+/* maroon */
+/* #771b1f */
+
+/* silver */
+/* #c7c5bf */
+
+/* dark grey */
+/* #b8b4ac */
+
+/* black */
+/* #0d0f13 */
