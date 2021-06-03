@@ -42,26 +42,32 @@ body {
     left: 50%;
     background-color: #b8b4ac;
     transform: translate(-50%, -50%);
-    transition: all ease 500ms;
+    transition: top ease 500ms, box-shadow 500ms ease;
     box-shadow: 0 0 10px 0 #771b1f;
     width: 90%;
+}
+.movie-search:focus {
+    box-shadow: 0 0 20px 0 #771b1f;
+    background-color: #b8b4ac;
 }
 
 /* Custom dropdown styling */
 .dropdown-menu {
     display: block;
     height: 0;
+    max-height: 20rem;
     opacity: 0;
     visibility: hidden;
-    max-width: 90%;
+    width: 90%;
     overflow-y: scroll;
     position: absolute;
     top: 50%;
     left: 50%;
-    transform: translate(-50%, 5%);
+    /* This 18px is half of the input height */
+    transform: translate(-50%, 18px);
     background-color: #b8b4ac;
     box-shadow: 0 0 10px 0 #771b1f;
-    transition: all 200ms ease;
+    transition: height 200ms ease, opacity 200ms ease, visibility 200ms ease, top 500ms ease, transform 500ms ease;
 }
 .dropdown-menu.visible {
     height: 20rem;
@@ -69,9 +75,8 @@ body {
     visibility: visible;
 }
 .dropdown-menu a {
-    transition: all ease 200ms;
+    transition: background-color ease 200ms, box-shadow 200ms ease;
     white-space: normal;
-    width: 22rem;
 }
 .dropdown-menu a:hover {
     cursor: pointer;
@@ -93,10 +98,7 @@ body {
     top: 0;
     transform: translate(-50%, 0);
 }
-.movie-search:focus {
-    box-shadow: 0 0 20px 0 #771b1f;
-    background-color: #b8b4ac;
-}
+
 
 /* COLOR PALLET gotten from background image */
 /* maroon */
