@@ -84,7 +84,9 @@ document.addEventListener('click', (e) => {
     if (document.contains(item)) {
         for (let dropdown of dropdowns) {
             dropdown.classList.remove('visible');
-            dropdown.innerHTML = '';
+            setTimeout(() => {
+                dropdown.innerHTML = '';
+            }, 300);
         }
     }
 })

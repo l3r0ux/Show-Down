@@ -67,7 +67,7 @@ body {
     transform: translate(-50%, 18px);
     background-color: #b8b4ac;
     box-shadow: 0 0 10px 0 #771b1f;
-    transition: height 200ms ease, opacity 200ms ease, visibility 200ms ease, top 500ms ease, transform 500ms ease;
+    transition: height 300ms ease, opacity 300ms ease, visibility 300ms ease, top 300ms ease, transform 500ms ease;
 }
 .dropdown-menu.visible {
     height: 20rem;
