@@ -18,8 +18,9 @@
 body {
     background-image: url(/images/cinema.jpg);
     background-attachment: fixed;
-    background-position: center;
-    background-size: cover;
+    background-position: center center;
+    /* background-size: cover; */
+    background-repeat: no-repeat;
     backdrop-filter: blur(4px);
     overflow-x: hidden;
     height: 100vh;
