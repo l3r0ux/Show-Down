@@ -3,19 +3,11 @@
     color: #c7c5bf;
 }
 
-/* .background-image {
-    position: fixed;
-    left: 0;
-    right: 0;
-    background: url(/images/cinema.jpg);
-    background-position: center;
-    background-size: cover;
-    filter: blur(4px);
-    height: 100vh;
-    transform: scale(1.1);
-} */
+html {
+    height: 100%;
+}
 
-.background-image {
+/* .background-image {
     position: fixed;
     bottom: 0;
     left: 0;
@@ -27,17 +19,18 @@
     background-size: cover;
     background-repeat: no-repeat;
     filter: blur(4px);
-}
+} */
 
 body {
-    /* background-image: url(/images/cinema.jpg);
+    background-image: url(/images/cinema.jpg);
     background-attachment: fixed;
     background-position: center center;
     background-size: cover;
     background-repeat: no-repeat;
-    backdrop-filter: blur(4px); */
+    backdrop-filter: blur(4px);
     overflow-x: hidden;
-    height: 100vh;
+    height: 100%;
+    background-color: black !important;
 }
 
 .vs {
@@ -163,9 +156,6 @@ body {
     }
     body {
         height: fit-content;
-    }
-    .background-image {
-        height: var(--page-height);
     }
 }
 
