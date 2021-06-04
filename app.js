@@ -2,7 +2,7 @@
 async function getMovies(searchTerm) {
     const response = await axios.get('http://www.omdbapi.com/', {
         params: {
-            apikey: config.API_KEY,
+            apikey: process.env.API_KEY,
             s: `${searchTerm}`
         }
     })
@@ -14,7 +14,7 @@ async function getMovies(searchTerm) {
 async function getSpecificMovie(id) {
     const response = await axios.get('http://www.omdbapi.com/', {
         params: {
-            apikey: config.API_KEY,
+            apikey: process.env.API_KEY,
             i: `${id}`
         }
     })
