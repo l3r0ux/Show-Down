@@ -22,6 +22,7 @@ body {
     background-size: cover;
     backdrop-filter: blur(4px);
     overflow-x: hidden;
+    height: 100vh;
 }
 
 /* Put overflow on any element other than html or body, becuase mobile phones ignore this if viewport is specified */
