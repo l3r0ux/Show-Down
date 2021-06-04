@@ -19,7 +19,7 @@ async function getSpecificMovie(id) {
         }
     })
     console.log(response.data)
-    return response.data.Search;
+    return response.data;
 }
 
 // Function to make dropdown menu
@@ -44,7 +44,7 @@ async function onInput(e) {
         dropdownItem.classList = 'dropdown-item d-flex';
         // Putting hidden imdbID so that can make request when click on it
         dropdownItem.innerHTML = `
-            <img src=${movie.Poster ? movie.Poster : '#'} class="img-fluid mr-3" alt="movie poster" style="height: 7rem; width: 5rem;">
+            <img src="${movie.Poster === 'N/A' ? '' : movie.Poster}" class="img-fluid mr-3" alt="movie poster" style="height: 7rem; width: 5rem;">
             <div class="d-flex flex-column justify-content-center">
                 <h5 class="title">${movie.Title}</h5>
                 <h6 class="year">${movie.Year}</h6>
@@ -53,19 +53,66 @@ async function onInput(e) {
         appendLocation.append(dropdownItem);
 
         // To append that specific movies summary to the appropriate side of the page
-        dropdownItem.addEventListener('click', () => {
+        dropdownItem.addEventListener('click', async () => {
             dropdown.classList.add('movie-present');
             // 36px is the inputs height, making the dropdown appear under the input
             dropdown.style.transform = 'translate(-50%, 36px)';
             input.classList.add('movie-present');
 
-            const specificMovie = getSpecificMovie(movie.imdbID);
-            console.log(dropdown.parentElement)
+            const specificMovie = await getSpecificMovie(movie.imdbID);
+            // This is the correct side where the input event was triggered
+            const side = dropdown.parentElement;
+            // clear any pre-existing movie details
+            console.log(side.children)
+            if (side.children[2]) {
+                side.children[2].classList.add('remove-movie-details');
+                setTimeout(() => {
+                    side.children[2].remove();
+                }, 500);
+            }
+            // console.log(side)
+            // If left side: true, if right side: false
+            const isLeftSside = side.classList.contains('left-section');
 
             // Info to be present:
-            // Poster, Title with production small next to it, Plot, then in small under plot, genre, release date, ages
             // Then stats in a big container with its id: left or right, and each stat in its own block:
             // box-office, imdb rating, metacritic score, awards
+            const detailsContainer = document.createElement('div');
+            detailsContainer.classList = `container ${isLeftSside ? 'left-details' : 'right-details'}`;
+            detailsContainer.innerHTML = `
+                <div class="row mb-5">
+                    <div class="col-5">
+                        <img src="${specificMovie.Poster === 'N/A' ? '' : specificMovie.Poster}" alt="movie poster" class="movie-detail-poster">
+                    </div>
+                    <div class="col-7 px-0">
+                        <h5 class="card-title mb-0">${specificMovie.Title}</h5>
+                        <h6 class="text-muted"> (${specificMovie.Year})</h6>
+                        <p class="mb-2">${specificMovie.Plot}</p>
+                        <small class="text-muted">${specificMovie.Production}</small><br>
+                        <small class="text-muted">${specificMovie.Genre}</small>
+                    </div>
+                </div>
+                <div class="row ${isLeftSside ? 'left-stats' : 'right-stats'}">
+                    <div class="${isLeftSside ? 'left-stat' : 'right-stat'} alert col-12">
+                        ${specificMovie.BoxOffice}  
+                    </div>
+                    <div class="${isLeftSside ? 'left-stat' : 'right-stat'} alert col-12">
+                        ${specificMovie.imdbRating}
+                    </div>
+                    <div class="${isLeftSside ? 'left-stat' : 'right-stat'} alert col-12">
+                        ${specificMovie.Metascore}
+                    </div>
+                    <div class="${isLeftSside ? 'left-stat' : 'right-stat'} alert col-12">
+                        ${specificMovie.Awards}
+                    </div>
+                </div>
+            `;
+            // Set container height to previous space takes for smoother mobile experience
+            side.style.height = 'fit-content';
+            side.append(detailsContainer);
+            requestAnimationFrame(() => {
+                detailsContainer.classList.add('section-visible');
+            })
         })
     }
 }
@@ -80,8 +127,8 @@ rightInput.addEventListener('input', debounce(onInput));
 document.addEventListener('click', (e) => {
     const dropdowns = document.querySelectorAll('.dropdown-menu');
     const item = document.querySelector('.dropdown-item');
-    // If user clicks anywhere and there is a dropdown item present, close dropdown menu
-    if (document.contains(item)) {
+    // If user clicks anywhere except the input, and there is a dropdown item present, close dropdown menu with items in
+    if (document.contains(item) && !(e.target.classList.contains('movie-search'))) {
         for (let dropdown of dropdowns) {
             dropdown.classList.remove('visible');
             setTimeout(() => {

@@ -3,24 +3,21 @@
     color: #c7c5bf;
 }
 
-body {
-    background: url(images/cinema.jpg) no-repeat fixed center;
+.background-image {
+    position: fixed;
+    left: 0;
+    right: 0;
+    background: url(images/cinema.jpg);
+    background-position: center;
     background-size: cover;
-    backdrop-filter: blur(4px);
-}
-
-/* main {
+    filter: blur(4px);
     height: 100vh;
-} */
-
-/* Bootstrap dont have these heighting intervals */
-.header-container {
-    height: 15%;
+    transform: scale(1.1);
 }
 
-/* .movies-container {
-    height: 85%;
-} */
+main {
+    overflow-x: hidden;
+}
 
 .vs {
     color: #771b1f;
@@ -28,14 +25,38 @@ body {
 
 /* Change the heighting to "fit-content" when the movie details gets added in */
 .left-section {
-    height: 85vh;
+    height: 70vh;
 }
 
 .right-section {
-    height: 85vh;
+    height: 70vh;
+}
+
+.left-details {
+    opacity: 0;
+    transform: translateX(-100%) scale(0.7);
+    transition: all 500ms ease;
+}
+
+.right-details {
+    opacity: 0;
+    transform: translateX(100%) scale(0.7);
+    transition: all 500ms ease;
+}
+
+.section-visible {
+    opacity: 1;
+    transform: translateX(0);
+}
+
+.remove-movie-details {
+    position: absolute;
+    transform: scale(0.1);
+    opacity: 0;
 }
 
 .movie-search {
+    z-index: 2;
     color: #0d0f13 !important;
     position: absolute;
     top: 50%;
@@ -53,6 +74,7 @@ body {
 
 /* Custom dropdown styling */
 .dropdown-menu {
+    z-index: 3;
     display: block;
     height: 0;
     max-height: 20rem;
@@ -85,18 +107,32 @@ body {
 }
 .title,
 .year {
-    color: black;
+    color: #0d0f13;
     transition: color ease 500ms;
 }
 .dropdown-menu a:hover div .title,
 .dropdown-menu a:hover div .year {
-    color: white;
+    color: #c7c5bf;
 }
 
 /* When add movie and its details added to the page, add this class to transform input up */
 .movie-present {
     top: 0;
     transform: translate(-50%, 0);
+}
+
+.movie-detail-poster {
+    max-width: 100%;
+    height: auto;
+    transform: skew(-5deg);
+    /* border: 2px solid #771b1f; */
+}
+
+.left-stat,
+.right-stat {
+    background-color: #0d0f13;
+    color: white;
+    box-shadow: 0 0 20px 0 #771b1f;
 }
 
 
