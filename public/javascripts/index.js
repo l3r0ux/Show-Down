@@ -83,16 +83,16 @@ async function onInput(e) {
                 </div>
                 <div class="row ${isLeftSside ? 'left-stats' : 'right-stats'}">
                     <div class="${isLeftSside ? 'left-stat' : 'right-stat'} alert col-12">
-                        ${specificMovie.BoxOffice}  
+                        Box Office: ${specificMovie.BoxOffice}  
                     </div>
                     <div class="${isLeftSside ? 'left-stat' : 'right-stat'} alert col-12">
-                        ${specificMovie.imdbRating}
+                        IMDB Rating: ${specificMovie.imdbRating}
                     </div>
                     <div class="${isLeftSside ? 'left-stat' : 'right-stat'} alert col-12">
-                        ${specificMovie.Metascore}
+                        Meta Score: ${specificMovie.Metascore}
                     </div>
                     <div class="${isLeftSside ? 'left-stat' : 'right-stat'} alert col-12">
-                        ${specificMovie.Awards}
+                        Awards: ${specificMovie.Awards}
                     </div>
                 </div>
             `;
