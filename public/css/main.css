@@ -7,12 +7,16 @@
     position: fixed;
     left: 0;
     right: 0;
-    background: url(images/cinema.jpg);
+    background: url(/images/cinema.jpg);
     background-position: center;
     background-size: cover;
     filter: blur(4px);
     height: 100vh;
     transform: scale(1.1);
+}
+
+body {
+    overflow-x: hidden;
 }
 
 /* Put overflow on any element other than html or body, becuase mobile phones ignore this if viewport is specified */
