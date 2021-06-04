@@ -128,4 +128,4 @@ document.addEventListener('click', (e) => {
 })
 
 // To set background image initial height
-document.querySelector(':root').style.setProperty('--page-height', `${window.innerHeight + 100}px`);
+document.querySelector(':root').style.setProperty('--page-height', `${window.innerHeight}px`);
