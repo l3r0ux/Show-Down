@@ -1,5 +1,4 @@
 // Async functions call to my server, which in turns gets data from OMDb API
-
 // To search movies
 async function getMovies(searchTerm) {
     const response = await axios.get(`/api/movies?s=${searchTerm}`);
@@ -127,3 +126,6 @@ document.addEventListener('click', (e) => {
         }
     }
 })
+
+// To set background image initial height
+document.querySelector(':root').style.setProperty('--page-height', `${window.innerHeight + 100}px`);
