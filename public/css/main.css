@@ -3,7 +3,7 @@
     color: #c7c5bf;
 }
 
-.background-image {
+/* .background-image {
     position: fixed;
     left: 0;
     right: 0;
@@ -13,9 +13,14 @@
     filter: blur(4px);
     height: 100vh;
     transform: scale(1.1);
-}
+} */
 
 body {
+    background-image: url(/images/cinema.jpg);
+    background-attachment: fixed;
+    background-position: center;
+    background-size: cover;
+    backdrop-filter: blur(4px);
     overflow-x: hidden;
 }
 
