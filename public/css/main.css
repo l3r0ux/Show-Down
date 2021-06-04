@@ -22,13 +22,8 @@ body {
     background-size: cover;
     backdrop-filter: blur(4px);
     overflow-x: hidden;
-    height: 100vh;
+    height: 100%;
 }
-
-/* Put overflow on any element other than html or body, becuase mobile phones ignore this if viewport is specified */
-/* main {
-    overflow-x: hidden;
-} */
 
 .vs {
     color: #771b1f;
@@ -144,6 +139,13 @@ body {
     background-color: #0d0f13;
     color: white;
     box-shadow: 0 0 20px 0 #771b1f;
+}
+
+@media (max-width: 767px) {
+    /* Put overflow on any element other than html or body, becuase mobile phones ignore this if viewport is specified */
+    main {
+        overflow-x: hidden;
+    }
 }
 
 
