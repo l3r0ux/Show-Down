@@ -20,9 +20,9 @@ body {
 }
 
 /* Put overflow on any element other than html or body, becuase mobile phones ignore this if viewport is specified */
-main {
+/* main {
     overflow-x: hidden;
-}
+} */
 
 .vs {
     color: #771b1f;
