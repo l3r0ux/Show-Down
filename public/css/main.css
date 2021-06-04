@@ -157,6 +157,9 @@ body {
     body {
         height: fit-content;
     }
+    .background-image {
+        height: var(--page-height);
+    }
 }
 
 
