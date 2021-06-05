@@ -12,12 +12,12 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
-app.get('/api/movies', async (req, res) => {
+app.get('/api/shows', async (req, res) => {
     // Get search term
     const searchTerm = req.query.s;
-    // To search for movies
+    // To search for shows
     // Axios automatically parses the response, no need for "response.json()"
-    async function getMovies(searchTerm) {
+    async function getShows(searchTerm) {
         const response = await axios.get('http://www.omdbapi.com/', {
             params: {
                 apikey: process.env.API_KEY,
@@ -31,16 +31,16 @@ app.get('/api/movies', async (req, res) => {
         }
     }
     // Getting data from OMDb API
-    const data = await getMovies(searchTerm);
+    const data = await getShows(searchTerm);
     // Sending data to the front end
     res.send(data);
 });
 
-app.get('/api/movie', async (req, res) => {
-    // Get specific movie id
+app.get('/api/show', async (req, res) => {
+    // Get specific show id
     const id = req.query.id;
-    // To get more info about specific movie
-    async function getSpecificMovie(id) {
+    // To get more info about specific show
+    async function getSpecificShow(id) {
         const response = await axios.get('http://www.omdbapi.com/', {
             params: {
                 apikey: process.env.API_KEY,
@@ -49,7 +49,7 @@ app.get('/api/movie', async (req, res) => {
         })
         return response.data;
     }
-    const data = await getSpecificMovie(id);
+    const data = await getSpecificShow(id);
     res.send(data);
 })
 
