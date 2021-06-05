@@ -56,14 +56,14 @@ body {
 
 .vs {
     filter: drop-shadow(0 0 25px  #c7c5bf);
-    stroke: #771b1f;
+    stroke: #aa181f;
     fill: transparent;
     stroke-width: 0;
-    animation: fill 500ms ease 1.5s forwards;
+    animation: fill 500ms ease 1.4s forwards;
 }
 @keyframes fill {
     to {
-        fill: #771b1f;
+        fill: #aa181f;
     }
 }
 

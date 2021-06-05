@@ -19,7 +19,6 @@ for (let i = 0; i < VS.length; i++) {
         duration: 2000,
         easing: 'ease',
         fill: 'forwards',
-        delay: 300
     }
 
     // Animate SVG paths
