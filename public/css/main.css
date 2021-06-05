@@ -1,6 +1,12 @@
 * {
     box-sizing: border-box;
     color: #c7c5bf;
+    /* font-family: url(/fonts/Act_Of_Rejection.ttf) !important; */
+}
+
+@font-face {
+    font-family: "battle";
+    src: url('/fonts/Act_Of_Rejection.ttf');
 }
 
 html {
@@ -23,7 +29,14 @@ body {
 }
 
 .vs {
-    color: #771b1f;
+    stroke: #771b1f;
+    fill: transparent;
+    animation: fill 500ms ease 1.5s forwards;
+}
+@keyframes fill {
+    to {
+        fill: #771b1f;
+    }
 }
 
 /* Change the heighting to "fit-content" when the movie details gets added in */

@@ -1,3 +1,31 @@
+// "VS" text animation on load
+const VS = document.querySelectorAll('svg path');
+for (let i = 0; i < VS.length; i++) {
+    // The stroke-dasharray and the stroke-offset must start with the full length of the path
+
+    // Set each letters corresponding dasharray and offset values
+    // Setting stroke-dasharray to full length of path, then ofsetting it by that length aswell to make it dissapear
+    let letter = VS[i];
+    letter.style.strokeWidth = '2px';
+    letter.style.strokeDasharray = letter.getTotalLength();
+    letter.style.strokeDashoffset = letter.getTotalLength();
+
+    // Make keyframes and options for each letter(path)
+    const keyframes = [
+        { strokeDashoffset: 0 },
+    ];
+
+    const options = {
+        duration: 2000,
+        easing: 'ease',
+        fill: 'forwards',
+        delay: 300
+    }
+
+    // Animate SVG paths
+    const animationObj = letter.animate(keyframes, options);
+}
+
 // Async functions call to my server, which in turns gets data from OMDb API
 // To search movies
 async function getMovies(searchTerm) {
