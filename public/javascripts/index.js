@@ -95,34 +95,66 @@ async function onInput(e) {
             // box-office, imdb rating, metacritic score, awards
             const detailsContainer = document.createElement('div');
             detailsContainer.classList = `container ${isLeftSside ? 'left-details' : 'right-details'}`;
-            detailsContainer.innerHTML = `
-                <div class="row mb-5">
-                    <div class="col-5">
-                        <img src="${specificShow.Poster === 'N/A' ? '' : specificShow.Poster}" alt="show poster" class="show-detail-poster">
+            // check if is series or a movie, then show different stats
+            if (show.Type === 'movie') {
+                detailsContainer.innerHTML = `
+                    <div class="row mb-5">
+                        <div class="col-5">
+                            <img src="${specificShow.Poster === 'N/A' ? '' : specificShow.Poster}" alt="show poster" class="show-detail-poster">
+                        </div>
+                        <div class="col-7 px-0">
+                            <h5 class="card-title mb-0">${specificShow.Title}</h5>
+                            <h6 class="text-muted"> (${specificShow.Year})</h6>
+                            <p class="mb-2">${specificShow.Plot}</p>
+                            <small class="text-muted">${specificShow.Production}</small><br>
+                            <small class="text-muted">${specificShow.Genre}</small>
+                        </div>
                     </div>
-                    <div class="col-7 px-0">
-                        <h5 class="card-title mb-0">${specificShow.Title}</h5>
-                        <h6 class="text-muted"> (${specificShow.Year})</h6>
-                        <p class="mb-2">${specificShow.Plot}</p>
-                        <small class="text-muted">${specificShow.Production}</small><br>
-                        <small class="text-muted">${specificShow.Genre}</small>
+                    <div class="row ${isLeftSside ? 'left-stats' : 'right-stats'}">
+                        <div class="${isLeftSside ? 'left-stat' : 'right-stat'} alert col-12">
+                            Box Office: ${specificShow.BoxOffice}  
+                        </div>
+                        <div class="${isLeftSside ? 'left-stat' : 'right-stat'} alert col-12">
+                            IMDB Rating: ${specificShow.imdbRating}
+                        </div>
+                        <div class="${isLeftSside ? 'left-stat' : 'right-stat'} alert col-12">
+                            Meta Score: ${specificShow.Metascore}
+                        </div>
+                        <div class="${isLeftSside ? 'left-stat' : 'right-stat'} alert col-12">
+                            Awards: ${specificShow.Awards}
+                        </div>
                     </div>
-                </div>
-                <div class="row ${isLeftSside ? 'left-stats' : 'right-stats'}">
-                    <div class="${isLeftSside ? 'left-stat' : 'right-stat'} alert col-12">
-                        Box Office: ${specificShow.BoxOffice}  
+                `;
+            } else {
+                detailsContainer.innerHTML = `
+                    <div class="row mb-5">
+                        <div class="col-5">
+                            <img src="${specificShow.Poster === 'N/A' ? '' : specificShow.Poster}" alt="show poster" class="show-detail-poster">
+                        </div>
+                        <div class="col-7 px-0">
+                            <h5 class="card-title mb-0">${specificShow.Title}</h5>
+                            <h6 class="text-muted"> (${specificShow.Year})</h6>
+                            <p class="mb-2">${specificShow.Plot}</p>
+                            <small class="text-muted">Written by ${specificShow.Writer}</small><br>
+                            <small class="text-muted">${specificShow.Genre}</small>
+                        </div>
                     </div>
-                    <div class="${isLeftSside ? 'left-stat' : 'right-stat'} alert col-12">
-                        IMDB Rating: ${specificShow.imdbRating}
+                    <div class="row ${isLeftSside ? 'left-stats' : 'right-stats'}">
+                        <div class="${isLeftSside ? 'left-stat' : 'right-stat'} alert col-12">
+                            Seasons: ${specificShow.totalSeasons}  
+                        </div>
+                        <div class="${isLeftSside ? 'left-stat' : 'right-stat'} alert col-12">
+                            IMDB Rating: ${specificShow.imdbRating}
+                        </div>
+                        <div class="${isLeftSside ? 'left-stat' : 'right-stat'} alert col-12">
+                            IMDB Votes: ${specificShow.imdbVotes}
+                        </div>
+                        <div class="${isLeftSside ? 'left-stat' : 'right-stat'} alert col-12">
+                            Awards: ${specificShow.Awards}
+                        </div>
                     </div>
-                    <div class="${isLeftSside ? 'left-stat' : 'right-stat'} alert col-12">
-                        Meta Score: ${specificShow.Metascore}
-                    </div>
-                    <div class="${isLeftSside ? 'left-stat' : 'right-stat'} alert col-12">
-                        Awards: ${specificShow.Awards}
-                    </div>
-                </div>
-            `;
+                `;
+            }
             // Set container height to previous space takes for smoother mobile experience
             side.style.height = 'fit-content';
             side.append(detailsContainer);
