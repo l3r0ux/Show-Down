@@ -26,21 +26,11 @@ for (let i = 0; i < VS.length; i++) {
     const animationObj = letter.animate(keyframes, options);
 }
 
-// Async functions call to my server, which in turns gets data from OMDb API
-// To search shows
-async function getShows(searchTerm) {
-    const response = await axios.get(`/api/shows?s=${searchTerm}`);
-    return response.data;
-}
 
-// To get specific show
-async function getSpecificShow(id) {
-    const response = await axios.get(`/api/show?id=${id}`)
-    console.log(response.data)
-    return response.data;
-}
-
-// Function to make dropdown menu
+// Variables to keep track of when sides are present
+let leftShow;
+let rightShow;
+// Function to make dropdown menu and append show to page
 async function onInput(e) {
     // Getting the correct side inputs and dropdowns
     let input = e.srcElement;
@@ -55,112 +45,39 @@ async function onInput(e) {
     if (shows.data === false) {
         return dropdown.classList.remove('visible');
     }
+    // If shows were found, proceed
     for (let show of shows) {
-        const dropdownItem = document.createElement('a');
-        const appendLocation = dropdown;
-        appendLocation.classList.add('visible');
-        dropdownItem.classList = 'dropdown-item d-flex';
-        // Putting hidden imdbID so that can make request when click on it
-        dropdownItem.innerHTML = `
-            <img src="${show.Poster === 'N/A' ? '' : show.Poster}" class="img-fluid mr-3" alt="show poster" style="height: 7rem; width: 5rem;">
-            <div class="d-flex flex-column justify-content-center">
-                <h5 class="title">${show.Title}</h5>
-                <h6 class="year">${show.Year}</h6>
-            </div> 
-        `;
-        appendLocation.append(dropdownItem);
+        const dropdownItem = makeDropdownItem(show, dropdown);
 
-        // To append that specific shows summary to the appropriate side of the page
+        // Add event listeners to each dropdownItem, which executes this function
         dropdownItem.addEventListener('click', async () => {
-            dropdown.classList.add('show-present');
-            // 36px is the inputs height, making the dropdown appear under the input
-            dropdown.style.transform = 'translate(-50%, 36px)';
-            input.classList.add('show-present');
-
-            const specificShow = await getSpecificShow(show.imdbID);
-            // This is the correct side where the input event was triggered
-            const side = dropdown.parentElement;
-            // clear any pre-existing show details
-            if (side.children[2]) {
-                side.children[2].classList.add('remove-show-details');
-                setTimeout(() => {
-                    side.children[2].remove();
-                }, 500);
-            }
-            // If left side: true, if right side: false
-            const isLeftSside = side.classList.contains('left-section');
-
-            // Info to be present:
-            // Then stats in a big container with its id: left or right, and each stat in its own block:
-            // box-office, imdb rating, metacritic score, awards
-            const detailsContainer = document.createElement('div');
-            detailsContainer.classList = `container ${isLeftSside ? 'left-details' : 'right-details'}`;
-            // check if is series or a movie, then show different stats
-            if (show.Type === 'movie') {
-                detailsContainer.innerHTML = `
-                    <div class="row mb-5">
-                        <div class="col-5">
-                            <img src="${specificShow.Poster === 'N/A' ? '' : specificShow.Poster}" alt="show poster" class="show-detail-poster">
-                        </div>
-                        <div class="col-7 px-0">
-                            <h5 class="card-title mb-0">${specificShow.Title}</h5>
-                            <h6 class="text-muted"> (${specificShow.Year})</h6>
-                            <p class="mb-2">${specificShow.Plot}</p>
-                            <small class="text-muted">${specificShow.Production}</small><br>
-                            <small class="text-muted">${specificShow.Genre}</small>
-                        </div>
-                    </div>
-                    <div class="row ${isLeftSside ? 'left-stats' : 'right-stats'}">
-                        <div class="${isLeftSside ? 'left-stat' : 'right-stat'} alert col-12">
-                            Box Office: ${specificShow.BoxOffice}  
-                        </div>
-                        <div class="${isLeftSside ? 'left-stat' : 'right-stat'} alert col-12">
-                            IMDB Rating: ${specificShow.imdbRating}
-                        </div>
-                        <div class="${isLeftSside ? 'left-stat' : 'right-stat'} alert col-12">
-                            Meta Score: ${specificShow.Metascore}
-                        </div>
-                        <div class="${isLeftSside ? 'left-stat' : 'right-stat'} alert col-12">
-                            Awards: ${specificShow.Awards}
-                        </div>
-                    </div>
-                `;
+            let sideAndType = await renderShowDetails(show, dropdown, input);
+            if (sideAndType.isLeftSide) {
+                leftShow = sideAndType;
             } else {
-                detailsContainer.innerHTML = `
-                    <div class="row mb-5">
-                        <div class="col-5">
-                            <img src="${specificShow.Poster === 'N/A' ? '' : specificShow.Poster}" alt="show poster" class="show-detail-poster">
-                        </div>
-                        <div class="col-7 px-0">
-                            <h5 class="card-title mb-0">${specificShow.Title}</h5>
-                            <h6 class="text-muted"> (${specificShow.Year})</h6>
-                            <p class="mb-2">${specificShow.Plot}</p>
-                            <small class="text-muted">Written by ${specificShow.Writer}</small><br>
-                            <small class="text-muted">${specificShow.Genre}</small>
-                        </div>
-                    </div>
-                    <div class="row ${isLeftSside ? 'left-stats' : 'right-stats'}">
-                        <div class="${isLeftSside ? 'left-stat' : 'right-stat'} alert col-12">
-                            Seasons: ${specificShow.totalSeasons}  
-                        </div>
-                        <div class="${isLeftSside ? 'left-stat' : 'right-stat'} alert col-12">
-                            IMDB Rating: ${specificShow.imdbRating}
-                        </div>
-                        <div class="${isLeftSside ? 'left-stat' : 'right-stat'} alert col-12">
-                            IMDB Votes: ${specificShow.imdbVotes}
-                        </div>
-                        <div class="${isLeftSside ? 'left-stat' : 'right-stat'} alert col-12">
-                            Awards: ${specificShow.Awards}
-                        </div>
-                    </div>
-                `;
+                rightShow = sideAndType;
             }
-            // Set container height to previous space takes for smoother mobile experience
-            side.style.height = 'fit-content';
-            side.append(detailsContainer);
-            requestAnimationFrame(() => {
-                detailsContainer.classList.add('section-visible');
-            })
+
+            // console.log(leftShow);
+            // console.log(rightShow);
+
+            // Run comparison logic if the movies are of the same type
+            if (leftShow && rightShow) {
+                console.log('2 shows present');
+                console.log('==========');
+                if ((leftShow.type === rightShow.type)) {
+                    console.log(`Show types are the same: '${leftShow.type}'`);
+                    console.log(`Run '${leftShow.type}' comparison function.`);
+                    console.log('==========');
+                } else {
+                    console.log("Shows are not the same type. Can't run comparison.");
+                    console.log('==========');
+                }
+            } else {
+                console.log('==========');
+                console.log(`One show present`);
+                console.log('==========');
+            }
         })
     }
 }
