@@ -169,6 +169,7 @@ body {
     max-width: 100%;
     height: auto;
     transform: skew(-5deg);
+    filter: drop-shadow(0 0 10px  #771b1f);
     /* border: 2px solid #771b1f; */
 }
 
@@ -176,7 +177,7 @@ body {
 .right-stat {
     background-color: #0d0f13;
     color: white;
-    box-shadow: 0 0 20px 0 #771b1f;
+    box-shadow: 0 0 10px 0 #771b1f;
 }
 
 @media (max-width: 767px) {
