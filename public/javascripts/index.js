@@ -68,16 +68,16 @@ async function onInput(e) {
                 if ((leftItem.type === rightItem.type)) {
                     // Change the background here to either the gaming one, or the movies/series one depending on .type
                     console.log(`Item types are the same: '${leftItem.type}'`);
-                    console.log(`Run '${leftItem.type}' comparison function.`);
+                    if (leftItem.type === 'movie') return console.log('Run movie comparison function.');
+                    if (leftItem.type === 'series') return console.log('Run series comparison function.');
+                    // If it wasnt a movie or series, then it's a game
+                    console.log('Run game comparison function.');
                     console.log('==========');
                 } else {
+                    // Make some popup appear to say cant compare different types?
                     console.log("Items are not the same type. Can't run comparison.");
                     console.log('==========');
                 }
-            } else {
-                console.log('==========');
-                console.log(`One item present`);
-                console.log('==========');
             }
         })
     }

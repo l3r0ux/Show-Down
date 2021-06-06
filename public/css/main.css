@@ -19,10 +19,6 @@
     src: url('/fonts/Staatliches-Regular.ttf');
 }
 
-html {
-    height: 100%;
-}
-
 #background-image {
     width: 100%;
     position: fixed;
@@ -48,8 +44,6 @@ html {
 body {
     font-family: 'body-font';
     letter-spacing: 1px;
-    font-weight: 200;
-    height: 100%;
     background-color: black;
     overflow-x: hidden;
 }
@@ -69,11 +63,13 @@ body {
 
 /* Change the heighting to "fit-content" when the item details gets added in */
 .left-section {
-    height: 70vh;
+    height: 35rem;
+    transition: height 500ms ease;
 }
 
 .right-section {
-    height: 70vh;
+    height: 35rem;
+    transition: height 500ms ease;
 }
 
 /* Class to add for the winner */
@@ -91,14 +87,14 @@ body {
 .left-details {
     padding: 1.5rem;
     opacity: 0;
-    transform: translateX(-100%) scale(0.7);
+    transform: translateX(-100%) scale(0.5);
     transition: all 500ms ease;
 }
 
 .right-details {
     padding: 1.5rem;
     opacity: 0;
-    transform: translateX(100%) scale(0.7);
+    transform: translateX(100%) scale(0.5);
     transition: all 500ms ease;
 }
 
@@ -109,7 +105,7 @@ body {
 
 .remove-item-details {
     position: absolute;
-    transform: scale(0.1);
+    transform: scale(0);
     opacity: 0;
 }
 
@@ -198,12 +194,33 @@ body {
     /* Put overflow on any element other than html or body, becuase mobile phones ignore this if viewport is specified */
     main {
         overflow-x: hidden;
-    }
-    body {
-        height: fit-content;
+        height: 100vh;
     }
     #background-image {
         filter: blur(0);
+    }
+    .left-section {
+        height: fit-content;
+        transition: height 500ms ease;
+        padding-top: 0 !important;
+    }
+    .right-section {
+        height: fit-content;
+        transition: height 500ms ease;
+        padding-top: 0 !important;
+    }
+
+    .item-search {
+        position: relative;
+        top: 0;
+        left: 0;
+        transform: translate(0, 0);
+        width: 100%;
+    }
+    .dropdown-menu {
+        transform: translate(-50%, 0);
+        top: 36px;
+        left: 50%;
     }
 }
 
