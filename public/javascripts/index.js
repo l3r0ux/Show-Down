@@ -19,6 +19,7 @@ for (let i = 0; i < VS.length; i++) {
         duration: 2000,
         easing: 'ease',
         fill: 'forwards',
+        delay: 300
     }
 
     // Animate SVG paths
@@ -27,54 +28,55 @@ for (let i = 0; i < VS.length; i++) {
 
 
 // Variables to keep track of when sides are present
-let leftShow;
-let rightShow;
-// Function to make dropdown menu and append show to page
+let leftItem;
+let rightItem;
+// Function to make dropdown menu and append item to page
 async function onInput(e) {
     // Getting the correct side inputs and dropdowns
     let input = e.srcElement;
     let dropdown = input.nextElementSibling;
     let searchTerm = input.value;
-    let shows = await getShows(searchTerm);
+    let items = await getItems(searchTerm);
 
     // Make sure dropdown items are cleared before search again
     dropdown.innerHTML = '';
 
-    // if no shows found, stop execution early and hide dropdown
-    if (shows.data === false) {
+    // if no items found, stop execution early and hide dropdown
+    if (items.data === false) {
         return dropdown.classList.remove('visible');
     }
-    // If shows were found, proceed
-    for (let show of shows) {
-        const dropdownItem = makeDropdownItem(show, dropdown);
+    // If items were found, proceed
+    for (let item of items) {
+        const dropdownItem = makeDropdownItem(item, dropdown);
 
         // Add event listeners to each dropdownItem, which executes this function
         dropdownItem.addEventListener('click', async () => {
-            let sideAndType = await renderShowDetails(show, dropdown, input);
+            let sideAndType = await renderItemDetails(item, dropdown, input);
             if (sideAndType.isLeftSide) {
-                leftShow = sideAndType;
+                leftItem = sideAndType;
             } else {
-                rightShow = sideAndType;
+                rightItem = sideAndType;
             }
 
-            // console.log(leftShow);
-            // console.log(rightShow);
+            // console.log(leftItem);
+            // console.log(rightItem);
 
             // Run comparison logic if the movies are of the same type
-            if (leftShow && rightShow) {
-                console.log('2 shows present');
+            if (leftItem && rightItem) {
+                console.log('2 items present');
                 console.log('==========');
-                if ((leftShow.type === rightShow.type)) {
-                    console.log(`Show types are the same: '${leftShow.type}'`);
-                    console.log(`Run '${leftShow.type}' comparison function.`);
+                if ((leftItem.type === rightItem.type)) {
+                    // Change the background here to either the gaming one, or the movies/series one depending on .type
+                    console.log(`Item types are the same: '${leftItem.type}'`);
+                    console.log(`Run '${leftItem.type}' comparison function.`);
                     console.log('==========');
                 } else {
-                    console.log("Shows are not the same type. Can't run comparison.");
+                    console.log("Items are not the same type. Can't run comparison.");
                     console.log('==========');
                 }
             } else {
                 console.log('==========');
-                console.log(`One show present`);
+                console.log(`One item present`);
                 console.log('==========');
             }
         })
@@ -92,7 +94,7 @@ document.addEventListener('click', (e) => {
     const dropdowns = document.querySelectorAll('.dropdown-menu');
     const item = document.querySelector('.dropdown-item');
     // If user clicks anywhere except the input, and there is a dropdown item present, close dropdown menu with items in
-    if (document.contains(item) && !(e.target.classList.contains('show-search'))) {
+    if (document.contains(item) && !(e.target.classList.contains('item-search'))) {
         for (let dropdown of dropdowns) {
             dropdown.classList.remove('visible');
             setTimeout(() => {

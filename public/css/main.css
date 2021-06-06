@@ -67,7 +67,7 @@ body {
     }
 }
 
-/* Change the heighting to "fit-content" when the show details gets added in */
+/* Change the heighting to "fit-content" when the item details gets added in */
 .left-section {
     height: 70vh;
 }
@@ -76,13 +76,27 @@ body {
     height: 70vh;
 }
 
+/* Class to add for the winner */
+.winner {
+    background-color: #ffd90057;
+    border-radius: 1rem;
+    box-shadow: 0 0 20px #ffd90057;
+}
+.loser {
+    background-color: #86858365;
+    border-radius: 1rem;
+    box-shadow: 0 0 20px #86858365;
+}
+
 .left-details {
+    padding: 1.5rem;
     opacity: 0;
     transform: translateX(-100%) scale(0.7);
     transition: all 500ms ease;
 }
 
 .right-details {
+    padding: 1.5rem;
     opacity: 0;
     transform: translateX(100%) scale(0.7);
     transition: all 500ms ease;
@@ -93,13 +107,13 @@ body {
     transform: translateX(0);
 }
 
-.remove-show-details {
+.remove-item-details {
     position: absolute;
     transform: scale(0.1);
     opacity: 0;
 }
 
-.show-search {
+.item-search {
     z-index: 2;
     color: #0d0f13 !important;
     position: absolute;
@@ -111,7 +125,7 @@ body {
     box-shadow: 0 0 10px 0 #771b1f;
     width: 90%;
 }
-.show-search:focus {
+.item-search:focus {
     box-shadow: 0 0 20px 0 #771b1f;
     background-color: #b8b4ac;
 }
@@ -159,13 +173,13 @@ body {
     color: #c7c5bf;
 }
 
-/* When add show and its details added to the page, add this class to transform input up */
-.show-present {
+/* When add item and its details added to the page, add this class to transform input up */
+.item-present {
     top: 0;
     transform: translate(-50%, 0);
 }
 
-.show-detail-poster {
+.item-detail-poster {
     max-width: 100%;
     height: auto;
     transform: skew(-5deg);
