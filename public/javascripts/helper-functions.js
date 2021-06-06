@@ -151,7 +151,7 @@ async function renderItemDetails(item, dropdown, input) {
         renderGame(detailsContainer, specificItem, isLeftSide, statsClassName);
     }
     // Set container height to previous space takes for smoother mobile experience
-    // side.style.height = 'fit-content';
+    side.style.height = 'fit-content';
     side.append(detailsContainer);
     requestAnimationFrame(() => {
         detailsContainer.classList.add('section-visible');
