@@ -53,12 +53,9 @@ body {
     stroke: #aa181f;
     fill: transparent;
     stroke-width: 0;
-    animation: fill 500ms ease 1.4s forwards;
 }
-@keyframes fill {
-    to {
-        fill: #aa181f;
-    }
+.vs path {
+    transition: opacity 500ms ease;
 }
 
 /* Change the heighting to "fit-content" when the item details gets added in */

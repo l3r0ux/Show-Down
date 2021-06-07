@@ -6,10 +6,11 @@ function makeDropdownItem(dropdown, hasData, item = null) {
     // If has no data, show no items matched search
     if (!(hasData)) {
         dropdownItem.innerHTML = '<div>No items matched your search.</div>';
-        dropdown.style.height = '3.2rem';
         dropdownItem.style.backgroundColor = '#771b1f';
         dropdownItem.style.boxShadow = '0 0 10px 0 #771b1f';
         appendLocation.append(dropdownItem);
+        // Set dropdown height to the messages' height
+        dropdown.style.height = `${dropdownItem.offsetHeight + 20}px`;
         return dropdownItem;
     }
     dropdown.style.height = '';
@@ -47,6 +48,7 @@ async function renderItemDetails(item, dropdown, input) {
         dropdown.style.transform = 'translate(-50%, 36px)';
         input.classList.add('item-present');
     }
+    
 
     // clear any pre-existing item details if there was a item before a new search
     if (side.children[2]) {
@@ -68,8 +70,6 @@ async function renderItemDetails(item, dropdown, input) {
         renderGame(detailsContainer, specificItem, isLeftSide, statsClassName);
     }
 
-    // side.style.height = "fit-content";
-
     side.append(detailsContainer);
     requestAnimationFrame(() => {
         detailsContainer.classList.add('section-visible');
@@ -88,9 +88,6 @@ async function renderItemDetails(item, dropdown, input) {
     let detailsHeight = parseFloat(detailsHeightString.slice(0, unitsIndex));
 
     side.style.height = `${inputHeight + detailsHeight + 10}px`;
-
-    // Scroll to that added item - especially handy for mobile
-    // detailsContainer.scrollIntoView({block: "center"});
 
     // Return item type, side bool, and classname to easily select the elements where the comparison function runs
     return {

@@ -1,5 +1,7 @@
 // "VS" text animation on load
 const VS = document.querySelectorAll('svg path');
+let strokeAnims = [];
+let fillAnims = [];
 for (let i = 0; i < VS.length; i++) {
     // The stroke-dasharray and the stroke-offset must start with the full length of the path
 
@@ -10,20 +12,35 @@ for (let i = 0; i < VS.length; i++) {
     letter.style.strokeDasharray = letter.getTotalLength();
     letter.style.strokeDashoffset = letter.getTotalLength();
 
-    // Make keyframes and options for each letter(path)
-    const keyframes = [
-        { strokeDashoffset: 0 },
-    ];
+    // #aa181f
+    // fill 500ms ease 1.4s forwards
 
-    const options = {
+    // Make keyframes and options for each letter(path)
+    const keyframes1 = [
+        { strokeDashoffset: 0 }
+    ];
+    const keyframes2 = [
+        { fill: 'transparent' },
+        { fill: '#aa181f' }
+    ]
+
+    const options1 = {
         duration: 2000,
         easing: 'ease',
         fill: 'forwards',
-        delay: 300
+    }
+    const options2 = {
+        duration: 400,
+        easing: 'ease',
+        fill: 'forwards',
+        delay: 1400
     }
 
     // Animate SVG paths
-    const animationObj = letter.animate(keyframes, options);
+    let strokeAnimObj = letter.animate(keyframes1, options1);
+    strokeAnims.push({ strokeAnimObj });
+    let fillAnimObj = letter.animate(keyframes2, options2);
+    fillAnims.push({ fillAnimObj })
 }
 
 
@@ -50,10 +67,12 @@ async function onInput(e) {
         return makeDropdownItem(dropdown, false);
     }
 
-    // Scroll to the added dropdown after its transition was finished - good for mobile devices
-    setTimeout(() => {
-        document.querySelector('.visible').scrollIntoView({ block: "end" });
-    }, 300)
+    // Scroll to the added dropdown after its transition was finished for mobile
+    if (window.innerWidth < 768) {
+        setTimeout(() => {
+            document.querySelector('.visible').scrollIntoView({ block: "end" });
+        }, 300)
+    }
 
     // If items were found, proceed
     for (let item of items) {
@@ -67,29 +86,43 @@ async function onInput(e) {
             } else {
                 rightItem = sideAndType;
             }
-
-            sideAndType.item.scrollIntoView({ block: "center" });
             console.log(sideAndType);
+
+            // Scroll to added in item if in mobile mode
+            if (window.innerWidth < 768) {
+                input.scrollIntoView({ block: "start" });
+            }
 
             // console.log(leftItem);
             // console.log(rightItem);
 
             // Run comparison logic if the movies are of the same type
             if (leftItem && rightItem) {
-                console.log('2 items present');
-                console.log('==========');
                 if ((leftItem.type === rightItem.type)) {
+                    // Play another 'vs' text animation
+                    const vsContainer = document.querySelector('.vs');
+                    // vsContainer.style.transform = 'scale(1.5)';
+                    const keyframes = [
+                        { transform: 'scale(1)' },
+                        { transform: 'scale(1.5) rotateZ(-10deg)', filter: 'drop-shadow(0 0 25px red)' },
+                        { transform: 'scale(1)' }
+                    ]
+                    const options = {
+                        duration: 500,
+                        easing: 'cubic-bezier(.88,.32,.68,1.45)',
+                        fill: 'forwards',
+                        delay: 400
+                    }
+                    vsContainer.animate(keyframes, options);
                     // Change the background here to either the gaming one, or the movies/series one depending on .type
-                    console.log(`Item types are the same: '${leftItem.type}'`);
+                    // Run the compare functions after 500ms
                     if (leftItem.type === 'movie') return console.log('Run movie comparison function.');
                     if (leftItem.type === 'series') return console.log('Run series comparison function.');
                     // If it wasnt a movie or series, then it's a game
-                    console.log('Run game comparison function.');
-                    console.log('==========');
+                    return console.log('Run game comparison function.');
                 } else {
                     // Make some popup appear to say cant compare different types?
                     console.log("Items are not the same type. Can't run comparison.");
-                    console.log('==========');
                 }
             }
         })
