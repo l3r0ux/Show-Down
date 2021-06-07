@@ -19,13 +19,22 @@
     src: url('/fonts/Staatliches-Regular.ttf');
 }
 
-#background-image {
+.background-image {
+    opacity: 0;
     width: 100%;
     position: fixed;
     bottom: 0;
     left: 50%;
     transform: translate(-50%, 0);
-    filter: blur(4px);
+    filter: blur(2px);
+    transition: opacity 200ms linear;
+}
+.background-image-visible {
+    opacity: 1;
+}
+#game-background {
+    bottom: 0;
+    left: 25%;
 }
 
 .header-container {
@@ -53,9 +62,6 @@ body {
     stroke: #aa181f;
     fill: transparent;
     stroke-width: 0;
-}
-.vs path {
-    transition: opacity 500ms ease;
 }
 
 /* Change the heighting to "fit-content" when the item details gets added in */

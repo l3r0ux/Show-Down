@@ -43,6 +43,14 @@ for (let i = 0; i < VS.length; i++) {
     fillAnims.push({ fillAnimObj })
 }
 
+const cinemaBackground = document.querySelector('#cinema-background');
+const gameBackground = document.querySelector('#game-background');
+let backgroundInterval;
+backgroundInterval = setInterval(() => {
+    cinemaBackground.classList.toggle('background-image-visible');
+    gameBackground.classList.toggle('background-image-visible');
+}, 5000)
+
 // Variables to keep track of when sides are present
 let leftItem;
 let rightItem;
@@ -103,7 +111,7 @@ async function onInput(e) {
                     // vsContainer.style.transform = 'scale(1.5)';
                     const keyframes = [
                         { transform: 'scale(1)' },
-                        { transform: 'scale(1.5) rotateZ(-10deg)', filter: 'drop-shadow(0 0 25px red)' },
+                        { transform: 'scale(1.5)', filter: 'drop-shadow(0 0 25px red)' },
                         { transform: 'scale(1)' }
                     ]
                     const options = {
@@ -113,11 +121,23 @@ async function onInput(e) {
                         delay: 400
                     }
                     vsContainer.animate(keyframes, options);
-                    // Change the background here to either the gaming one, or the movies/series one depending on .type
+                    // Change the background here to either the gaming one, or the movies/series one depending on the common .type
+                    if (leftItem.type === 'movie' || leftItem.type === 'series') {
+                        clearInterval(backgroundInterval);
+                        cinemaBackground.classList.add('background-image-visible')
+                        gameBackground.classList.remove('background-image-visible')
+                    }
                     // Run the compare functions after 500ms
-                    if (leftItem.type === 'movie') return console.log('Run movie comparison function.');
-                    if (leftItem.type === 'series') return console.log('Run series comparison function.');
+                    if (leftItem.type === 'movie') {
+                        return console.log('Run movie comparison function.');
+                    }
+                    if (leftItem.type === 'series') {
+                        return console.log('Run series comparison function.');
+                    }
                     // If it wasnt a movie or series, then it's a game
+                    clearInterval(backgroundInterval);
+                    cinemaBackground.classList.remove('background-image-visible')
+                    gameBackground.classList.add('background-image-visible')
                     return console.log('Run game comparison function.');
                 } else {
                     // Make some popup appear to say cant compare different types?
