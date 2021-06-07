@@ -41,13 +41,23 @@ async function onInput(e) {
     // Make sure dropdown items are cleared before search again
     dropdown.innerHTML = '';
 
-    // if no items found, stop execution early and hide dropdown
+    // Make dropdown visible
+    dropdown.classList.add('visible');
+
+    // if no items found, stop execution early and show 'no items found' text
     if (items.data === false) {
-        return dropdown.classList.remove('visible');
+        // Show 'No items found' - 'hasData' arg is false
+        return makeDropdownItem(dropdown, false);
     }
+
+    // Scroll to the added dropdown after its transition was finished - good for mobile devices
+    setTimeout(() => {
+        document.querySelector('.visible').scrollIntoView({ block: "end" });
+    }, 300)
+
     // If items were found, proceed
     for (let item of items) {
-        const dropdownItem = makeDropdownItem(item, dropdown);
+        const dropdownItem = makeDropdownItem(dropdown, true, item);
 
         // Add event listeners to each dropdownItem, which executes this function
         dropdownItem.addEventListener('click', async () => {
@@ -57,6 +67,9 @@ async function onInput(e) {
             } else {
                 rightItem = sideAndType;
             }
+
+            sideAndType.item.scrollIntoView({ block: "center" });
+            console.log(sideAndType);
 
             // console.log(leftItem);
             // console.log(rightItem);

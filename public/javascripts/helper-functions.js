@@ -1,9 +1,18 @@
 // Function to make dropdown items
-function makeDropdownItem(item, dropdown) {
+function makeDropdownItem(dropdown, hasData, item = null) {
     const dropdownItem = document.createElement('a');
     const appendLocation = dropdown;
-    appendLocation.classList.add('visible');
     dropdownItem.classList = 'dropdown-item d-flex';
+    // If has no data, show no items matched search
+    if (!(hasData)) {
+        dropdownItem.innerHTML = '<div>No items matched your search.</div>';
+        dropdown.style.height = '3.2rem';
+        dropdownItem.style.backgroundColor = '#771b1f';
+        dropdownItem.style.boxShadow = '0 0 10px 0 #771b1f';
+        appendLocation.append(dropdownItem);
+        return dropdownItem;
+    }
+    dropdown.style.height = '';
     dropdownItem.innerHTML = `
         <img src="${item.Poster === 'N/A' ? '' : item.Poster}" class="img-fluid mr-3" alt="item poster" style="height: 7rem; width: 5rem;">
         <div class="d-flex flex-column justify-content-center">
@@ -70,21 +79,25 @@ async function renderItemDetails(item, dropdown, input) {
     // Get computed heights of elements that make up the side section -
     // process them and add that height to the side section('.left-section' or '.right-section') in order to have height animation
     let inputHeightString = getComputedStyle(input).height;
+    // Index where units are ('px')
     let inputUnitsIndex = inputHeightString.length - 2;
     let inputHeight = parseFloat(inputHeightString.slice(0, inputUnitsIndex));
 
     let detailsHeightString = window.getComputedStyle(side.children[2]).height;
-    // Index where units are ('px')
     let unitsIndex = detailsHeightString.length - 2;
     let detailsHeight = parseFloat(detailsHeightString.slice(0, unitsIndex));
 
     side.style.height = `${inputHeight + detailsHeight + 10}px`;
 
+    // Scroll to that added item - especially handy for mobile
+    // detailsContainer.scrollIntoView({block: "center"});
+
     // Return item type, side bool, and classname to easily select the elements where the comparison function runs
     return {
         type: item.Type,
         isLeftSide: isLeftSide,
-        statsClassName: statsClassName
+        statsClassName: statsClassName,
+        item: detailsContainer
     };
 }
 
