@@ -43,7 +43,6 @@ for (let i = 0; i < VS.length; i++) {
     fillAnims.push({ fillAnimObj })
 }
 
-
 // Variables to keep track of when sides are present
 let leftItem;
 let rightItem;
