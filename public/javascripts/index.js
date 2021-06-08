@@ -54,6 +54,9 @@ backgroundInterval = setInterval(() => {
 // Variables to keep track of when sides are present
 let leftItem;
 let rightItem;
+let itemInfo;
+let leftPoints;
+let rightPoints;
 // Function to make dropdown menu and append item to page
 async function onInput(e) {
     // Getting the correct side inputs and dropdowns
@@ -87,28 +90,32 @@ async function onInput(e) {
 
         // Add event listeners to each dropdownItem, which executes this function
         dropdownItem.addEventListener('click', async () => {
-            let sideAndType = await renderItemDetails(item, dropdown, input);
-            if (sideAndType.isLeftSide) {
-                leftItem = sideAndType;
+            itemInfo = await renderItemDetails(item, dropdown, input);
+            if (itemInfo.isLeftSide) {
+                leftItem = itemInfo;
             } else {
-                rightItem = sideAndType;
+                rightItem = itemInfo;
             }
-            console.log(sideAndType);
 
             // Scroll to added in item if in mobile mode
             if (window.innerWidth < 768) {
                 input.scrollIntoView({ block: "start" });
             }
 
-            // console.log(leftItem);
-            // console.log(rightItem);
-
             // Run comparison logic if the movies are of the same type
             if (leftItem && rightItem) {
                 if ((leftItem.type === rightItem.type)) {
+                    // Remove not comparable text if present
+                    let message = document.querySelector('.not-comparable');
+                    if (message) {
+                        message.classList.remove('visible');
+                        setTimeout(() => {
+                            message.remove();
+                        }, 500)
+                    }
+
                     // Play another 'vs' text animation
                     const vsContainer = document.querySelector('.vs');
-                    // vsContainer.style.transform = 'scale(1.5)';
                     const keyframes = [
                         { transform: 'scale(1)' },
                         { transform: 'scale(1.5)', filter: 'drop-shadow(0 0 25px red)' },
@@ -121,6 +128,7 @@ async function onInput(e) {
                         delay: 400
                     }
                     vsContainer.animate(keyframes, options);
+
                     // Change the background here to either the gaming one, or the movies/series one depending on the common .type
                     if (leftItem.type === 'movie' || leftItem.type === 'series') {
                         clearInterval(backgroundInterval);
@@ -130,6 +138,27 @@ async function onInput(e) {
                     // Run the compare functions after 500ms
                     if (leftItem.type === 'movie') {
                         return console.log('Run movie comparison function.');
+                        // Function to compare movies - increment leftPoints or rightPoints depending on which stat won
+                        // function compareMovies(leftItem, rightItem) {
+                        //     let leftStats = document.querySelector(`.${leftItem.statsClassName}`).children;
+                        //     let rightStats = document.querySelector(`.${rightItem.statsClassName}`).children;
+
+                        //     // Regular expressions for each stat type
+                        //     // const boxOffice = 
+
+                        //     for (let i = 0; i < leftStats.length; i++) {
+                        //         let rawLeftStat = leftStats[i].innerText;
+                        //         let rawRightStat = rightStats[i].innerText;
+                        //         // console.log(rawLeftStat)
+                        //         // console.log(rawRightStat)
+                        //         // Process stats with regular expressions to get numbers out
+                        //         let leftStat = rawLeftStat.replace(/\$/g, '').replace(/,/g, '');
+                        //         console.log(leftStat);
+                        //         let rightStat = rawRightStat.replace(/\$/g, '').replace(/,/g, '');
+                        //         console.log(rightStat);
+                        //     }
+                        // }
+                        // return compareMovies(leftItem, rightItem);
                     }
                     if (leftItem.type === 'series') {
                         return console.log('Run series comparison function.');
@@ -140,8 +169,24 @@ async function onInput(e) {
                     gameBackground.classList.add('background-image-visible')
                     return console.log('Run game comparison function.');
                 } else {
-                    // Make some popup appear to say cant compare different types?
-                    console.log("Items are not the same type. Can't run comparison.");
+                    // If there was a not comparable message before, remove it before add new one
+                    if (document.querySelector('.not-comparable')) {
+                        // Remove not comparable text if present
+                        let message = document.querySelector('.not-comparable');
+                        message.classList.remove('visible');
+                        setTimeout(() => {
+                            message.remove();
+                        }, 500)
+                    }
+                    // Popup appears to say can't compare different types
+                    const appendLocation = document.querySelector('.middle');
+                    let message = document.createElement('div');
+                    message.classList.add('not-comparable');
+                    message.innerText = `Can't compare a ${leftItem.type} with a ${rightItem.type}`;
+                    appendLocation.prepend(message);
+                    requestAnimationFrame(() => {
+                        message.classList.add('visible')
+                    })
                 }
             }
         })

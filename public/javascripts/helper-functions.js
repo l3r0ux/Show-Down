@@ -91,6 +91,7 @@ async function renderItemDetails(item, dropdown, input) {
 
     // Return item type, side bool, and classname to easily select the elements where the comparison function runs
     return {
+        data: specificItem,
         type: item.Type,
         isLeftSide: isLeftSide,
         statsClassName: statsClassName,

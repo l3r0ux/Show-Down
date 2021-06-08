@@ -55,6 +55,23 @@ body {
     letter-spacing: 1px;
     background-color: black;
     overflow-x: hidden;
+    overflow-y: scroll;
+}
+
+.not-comparable {
+    text-align: center;
+    position: absolute;
+    top: 25%;
+    opacity: 0;
+    background-color: #c7c5bfe7;
+    box-shadow: 0 0 10px 0 #c7c5bf;
+    color: black;
+    padding: 0.2rem;
+    border-radius: 1rem;
+    transition: opacity 500ms ease;
+}
+.not-comparable.visible {
+    opacity: 1;
 }
 
 .vs {
@@ -78,16 +95,15 @@ body {
 /* Class to add for the winner */
 .winner {
     background-color: #ffd90057;
-    border-radius: 1rem;
     box-shadow: 0 0 20px #ffd90057;
 }
 .loser {
     background-color: #86858365;
-    border-radius: 1rem;
     box-shadow: 0 0 20px #86858365;
 }
 
 .left-details {
+    border-radius: 1rem;
     padding: 1.5rem;
     opacity: 0;
     transform: translateX(-100%) scale(0.5);
@@ -95,6 +111,7 @@ body {
 }
 
 .right-details {
+    border-radius: 1rem;
     padding: 1.5rem;
     opacity: 0;
     transform: translateX(100%) scale(0.5);
@@ -225,6 +242,9 @@ body {
         transform: translate(-50%, 0);
         top: 36px;
         left: 50%;
+    }
+    .not-comparable {
+        top: 0;
     }
 }
 
