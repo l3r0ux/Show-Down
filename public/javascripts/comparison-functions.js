@@ -37,15 +37,17 @@ function compareMovies(leftItem, rightItem, searchInputs) {
             leftItem.item.classList.add('loser');
             rightItem.item.classList.add('winner');
         } else {
-            // Prepending 'tied' text
-            const appendLocation = document.querySelector('.middle');
-            let tied = document.createElement('div');
-            tied.classList.add('tied');
-            tied.innerText = 'TIE!';
-            appendLocation.prepend(tied);
-            requestAnimationFrame(() => {
-                tied.classList.add('visible')
-            })
+            // Prepending 'tied' text on desktop
+            if (window.innerWidth > 768) {
+                const appendLocation = document.querySelector('.middle');
+                let tied = document.createElement('div');
+                tied.classList.add('tied');
+                tied.innerText = 'TIE!';
+                appendLocation.prepend(tied);
+                requestAnimationFrame(() => {
+                    tied.classList.add('visible')
+                })
+            }
         }
         // Enable search inputs again at the end
         for (let input of searchInputs) {
