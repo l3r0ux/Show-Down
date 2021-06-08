@@ -124,12 +124,14 @@ async function onInput(e) {
                 rightItem.item.classList.remove('loser');
                 rightItem.item.classList.remove('tie');
                 for (let i = 0; i < leftStats.length; i++) {
-                    leftStats[i].classList.remove('loser');
-                    leftStats[i].classList.remove('winner');
-                    leftStats[i].classList.remove('tie');
-                    rightStats[i].classList.remove('loser');
-                    rightStats[i].classList.remove('winner');
-                    rightStats[i].classList.remove('tie');
+                    if (leftStats[i] && rightStats[i]) {
+                        leftStats[i].classList.remove('loser');
+                        leftStats[i].classList.remove('winner');
+                        leftStats[i].classList.remove('tie');
+                        rightStats[i].classList.remove('loser');
+                        rightStats[i].classList.remove('winner');
+                        rightStats[i].classList.remove('tie');
+                    }
                 }
 
                 if ((leftItem.type === rightItem.type)) {
