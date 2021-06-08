@@ -54,9 +54,9 @@ backgroundInterval = setInterval(() => {
 // Variables to keep track of when sides are present
 let leftItem;
 let rightItem;
-let itemInfo;
-let leftPoints;
-let rightPoints;
+// To keep track of which side scored the most points to assign overall winner or loser class
+let leftPoints = 0;
+let rightPoints = 0;
 // Function to make dropdown menu and append item to page
 async function onInput(e) {
     // Getting the correct side inputs and dropdowns
@@ -90,11 +90,20 @@ async function onInput(e) {
 
         // Add event listeners to each dropdownItem, which executes this function
         dropdownItem.addEventListener('click', async () => {
-            itemInfo = await renderItemDetails(item, dropdown, input);
+            let itemInfo = await renderItemDetails(item, dropdown, input);
             if (itemInfo.isLeftSide) {
                 leftItem = itemInfo;
             } else {
                 rightItem = itemInfo;
+            }
+
+            // Remove 'tied' text if any
+            let tied = document.querySelector('.tied');
+            if (tied) {
+                tied.classList.remove('visible');
+                setTimeout(() => {
+                    tied.remove();
+                }, 500)
             }
 
             // Scroll to added in item if in mobile mode
@@ -104,7 +113,29 @@ async function onInput(e) {
 
             // Run comparison logic if the movies are of the same type
             if (leftItem && rightItem) {
+                // Get stats that were on screen on click and clear their winning/losing classes
+                let leftStats = document.querySelector(`.${leftItem.statsClassName}`).children;
+                let rightStats = document.querySelector(`.${rightItem.statsClassName}`).children;
+                // Clear all classes fast before next comparison starts
+                leftItem.item.classList.remove('winner');
+                leftItem.item.classList.remove('loser');
+                leftItem.item.classList.remove('tie');
+                rightItem.item.classList.remove('winner');
+                rightItem.item.classList.remove('loser');
+                rightItem.item.classList.remove('tie');
+                for (let i = 0; i < leftStats.length; i++) {
+                    leftStats[i].classList.remove('loser');
+                    leftStats[i].classList.remove('winner');
+                    leftStats[i].classList.remove('tie');
+                    rightStats[i].classList.remove('loser');
+                    rightStats[i].classList.remove('winner');
+                    rightStats[i].classList.remove('tie');
+                }
+
                 if ((leftItem.type === rightItem.type)) {
+                    // Reset points on next search if items are same type
+                    rightPoints = 0;
+                    leftPoints = 0;
                     // Remove not comparable text if present
                     let message = document.querySelector('.not-comparable');
                     if (message) {
@@ -135,31 +166,20 @@ async function onInput(e) {
                         cinemaBackground.classList.add('background-image-visible')
                         gameBackground.classList.remove('background-image-visible')
                     }
-                    // Run the compare functions after 500ms
+
+                    // If item types are movies:
                     if (leftItem.type === 'movie') {
-                        return console.log('Run movie comparison function.');
-                        // Function to compare movies - increment leftPoints or rightPoints depending on which stat won
-                        // function compareMovies(leftItem, rightItem) {
-                        //     let leftStats = document.querySelector(`.${leftItem.statsClassName}`).children;
-                        //     let rightStats = document.querySelector(`.${rightItem.statsClassName}`).children;
-
-                        //     // Regular expressions for each stat type
-                        //     // const boxOffice = 
-
-                        //     for (let i = 0; i < leftStats.length; i++) {
-                        //         let rawLeftStat = leftStats[i].innerText;
-                        //         let rawRightStat = rightStats[i].innerText;
-                        //         // console.log(rawLeftStat)
-                        //         // console.log(rawRightStat)
-                        //         // Process stats with regular expressions to get numbers out
-                        //         let leftStat = rawLeftStat.replace(/\$/g, '').replace(/,/g, '');
-                        //         console.log(leftStat);
-                        //         let rightStat = rawRightStat.replace(/\$/g, '').replace(/,/g, '');
-                        //         console.log(rightStat);
-                        //     }
-                        // }
-                        // return compareMovies(leftItem, rightItem);
+                        console.log('Run movie comparison function.');
+                        // Disable search inputs at start of comparison process
+                        let searchInputs = document.querySelectorAll('.item-search');
+                        for (let input of searchInputs) {
+                            input.disabled = true;
+                        }
+                        return setTimeout(() => {
+                            compareMovies(leftItem, rightItem, searchInputs);
+                        }, 1000)
                     }
+
                     if (leftItem.type === 'series') {
                         return console.log('Run series comparison function.');
                     }

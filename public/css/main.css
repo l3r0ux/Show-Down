@@ -70,7 +70,19 @@ body {
     border-radius: 1rem;
     transition: opacity 500ms ease;
 }
-.not-comparable.visible {
+.tied {
+    font-family: 'street-fighter';
+    font-size: 5rem;
+    text-align: center;
+    position: absolute;
+    top: 15%;
+    opacity: 0;
+    filter: drop-shadow(0 0 5px #771b1f);
+    color: #c7c5bf;
+    transition: opacity 500ms ease;
+}
+.not-comparable.visible,
+.tied.visible {
     opacity: 1;
 }
 
@@ -94,12 +106,16 @@ body {
 
 /* Class to add for the winner */
 .winner {
-    background-color: #ffd90057;
-    box-shadow: 0 0 20px #ffd90057;
+    background-color: #ffd90057 !important;
+    box-shadow: 0 0 20px #ffd90057 !important;
+}
+.tie {
+    background-color: #0d0f139d !important;
+    box-shadow: 0 0 20px #0d0f139d !important;
 }
 .loser {
-    background-color: #86858365;
-    box-shadow: 0 0 20px #86858365;
+    background-color: #86858365 !important;
+    box-shadow: 0 0 20px #86858365 !important;
 }
 
 .left-details {
@@ -208,6 +224,7 @@ body {
     background-color: #0d0f13;
     color: white;
     box-shadow: 0 0 10px 0 #771b1f;
+    transition: background-color 500ms ease, box-shadow 500ms ease;
 }
 
 @media (max-width: 767px) {
@@ -243,7 +260,8 @@ body {
         top: 36px;
         left: 50%;
     }
-    .not-comparable {
+    .not-comparable,
+    .tied {
         top: 0;
     }
 }

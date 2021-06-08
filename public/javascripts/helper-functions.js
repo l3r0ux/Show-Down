@@ -63,7 +63,21 @@ async function renderItemDetails(item, dropdown, input) {
     detailsContainer.classList = `container ${isLeftSide ? 'left-details' : 'right-details'}`;
     // check if is series or a movie, then item different stats
     if (item.Type === 'movie') {
-        renderMovie(detailsContainer, specificItem, isLeftSide, statsClassName);
+        // Format data correctly and put on data-value on html to access easily when do comparison
+        let boxOffice = specificItem.BoxOffice === 'N/A' ? 0 : parseInt(specificItem.BoxOffice.replace(/\$/g, '').replace(/,/g, ''));
+        let imdbRating = specificItem.imdbRating === 'N/A' ? 0 : parseFloat(specificItem.imdbRating);
+        let metaScore = specificItem.Metascore === 'N/A' ? 0 : parseInt(specificItem.Metascore);
+        let awards = specificItem.Awards === 'N/A' ? 0 : specificItem.Awards.split(' ').reduce((prev, word) => {
+            // value will be NaN if it tries to parseInt on a word and not number
+            const value = parseInt(word);
+            // isNaN is a built in function to check if something is a number or not
+            if(isNaN(value)) {
+                return prev;
+            } else {
+                return prev + value;
+            }
+        }, 0);
+        renderMovie(detailsContainer, specificItem, isLeftSide, statsClassName, boxOffice, imdbRating, metaScore, awards);
     } else if (item.Type === 'series') {
         renderSeries(detailsContainer, specificItem, isLeftSide, statsClassName);
     } else {
@@ -119,7 +133,7 @@ const debounce = (func, delay = 500) => {
 }
 
 // function to render item if its a movie
-function renderMovie(detailsContainer, specificItem, isLeftSide, statsClassName) {
+function renderMovie(detailsContainer, specificItem, isLeftSide, statsClassName, boxOfficeData, imdbRatingData, metaScoreData, awardsData) {
     detailsContainer.innerHTML = `
         <div class="row mb-5">
             <div class="col-5">
@@ -134,17 +148,17 @@ function renderMovie(detailsContainer, specificItem, isLeftSide, statsClassName)
             </div>
         </div>
         <div class="row ${statsClassName}">
-            <div class="${isLeftSide ? 'left-stat' : 'right-stat'} alert col-12">
+            <div class="${isLeftSide ? 'left-stat' : 'right-stat'} alert col-12" data-value=${awardsData}>
+                Awards: ${specificItem.Awards}
+            </div>
+            <div class="${isLeftSide ? 'left-stat' : 'right-stat'} alert col-12" data-value=${boxOfficeData}>
                 Box Office: ${specificItem.BoxOffice}  
             </div>
-            <div class="${isLeftSide ? 'left-stat' : 'right-stat'} alert col-12">
+            <div class="${isLeftSide ? 'left-stat' : 'right-stat'} alert col-12" data-value=${imdbRatingData}>
                 IMDB Rating: ${specificItem.imdbRating}
             </div>
-            <div class="${isLeftSide ? 'left-stat' : 'right-stat'} alert col-12">
+            <div class="${isLeftSide ? 'left-stat' : 'right-stat'} alert col-12 mb-0" data-value=${metaScoreData}>
                 Meta Score: ${specificItem.Metascore}
-            </div>
-            <div class="${isLeftSide ? 'left-stat' : 'right-stat'} alert col-12 mb-0">
-                Awards: ${specificItem.Awards}
             </div>
         </div>
     `;
