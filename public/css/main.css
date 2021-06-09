@@ -1,7 +1,6 @@
 * {
     box-sizing: border-box;
     color: #c7c5bf;
-    /* font-family: url(/fonts/Act_Of_Rejection.ttf) !important; */
 }
 
 @font-face {
@@ -27,7 +26,7 @@
     left: 50%;
     transform: translate(-50%, 0);
     filter: blur(2px);
-    transition: opacity 200ms linear;
+    transition: opacity 1000ms linear;
 }
 .background-image-visible {
     opacity: 1;
@@ -52,7 +51,6 @@
 
 body {
     font-family: 'body-font';
-    letter-spacing: 1px;
     background-color: black;
     overflow-x: hidden;
     overflow-y: scroll;
@@ -66,7 +64,7 @@ body {
     background-color: #c7c5bfe7;
     box-shadow: 0 0 10px 0 #c7c5bf;
     color: black;
-    padding: 0.2rem;
+    padding: 0.4rem;
     border-radius: 1rem;
     transition: opacity 500ms ease;
 }
@@ -265,7 +263,6 @@ body {
         top: 0;
     }
 }
-
 
 /* COLOR PALLET gotten from background image */
 /* maroon */

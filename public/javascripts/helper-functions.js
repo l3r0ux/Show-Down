@@ -28,7 +28,7 @@ function makeDropdownItem(dropdown, hasData, item = null) {
 
 // Funtion to render the clicked on item from the dropdown
 async function renderItemDetails(item, dropdown, input) {
-    // To append that specific items summary to the appropriate side of the page
+    // Another request to append that specific items summary to the appropriate side of the page
     const specificItem = await getSpecificItem(item.imdbID);
 
     // This is the correct side where the input event was triggered
@@ -38,7 +38,7 @@ async function renderItemDetails(item, dropdown, input) {
     const isLeftSide = side.classList.contains('left-section');
 
     // Classname for the stats container based on 'isLeftSide'
-    // Also forwarded to 'renderMovie' and 'renderSeries' functions to set the class name on the stats containers
+    // Also forwarded to 'renderMovie' and 'renderSeries' functions to set the class name on the stats containers for easy selection later
     const statsClassName = isLeftSide ? 'left-stats' : 'right-stats';
 
     // Only do input animation on desktop
@@ -124,9 +124,8 @@ async function renderItemDetails(item, dropdown, input) {
 
     side.style.height = `${inputHeight + detailsHeight + 10}px`;
 
-    // Return item type, side bool, and classname to easily select the elements where the comparison function runs
+    // Return item details to easily select items when comparison function runs
     return {
-        data: specificItem,
         type: item.Type,
         isLeftSide: isLeftSide,
         statsClassName: statsClassName,
@@ -202,17 +201,17 @@ function renderSeries(detailsContainer, specificItem, isLeftSide, statsClassName
             </div>
         </div>
         <div class="row ${statsClassName}">
+            <div class="${isLeftSide ? 'left-stat' : 'right-stat'} alert col-12" data-value=${awardsData}>
+                Awards: ${specificItem.Awards}
+            </div>
             <div class="${isLeftSide ? 'left-stat' : 'right-stat'} alert col-12" data-value=${totalSeasonsData}>
                 Seasons: ${specificItem.totalSeasons}  
             </div>
             <div class="${isLeftSide ? 'left-stat' : 'right-stat'} alert col-12" data-value=${imdbRatingData}>
                 IMDB Rating: ${specificItem.imdbRating}
             </div>
-            <div class="${isLeftSide ? 'left-stat' : 'right-stat'} alert col-12" data-value=${imdbVotesData}>
+            <div class="${isLeftSide ? 'left-stat' : 'right-stat'} alert col-12 mb-0" data-value=${imdbVotesData}>
                 IMDB Votes: ${specificItem.imdbVotes}
-            </div>
-            <div class="${isLeftSide ? 'left-stat' : 'right-stat'} alert col-12 mb-0" data-value=${awardsData}>
-                Awards: ${specificItem.Awards}
             </div>
         </div>
     `;
@@ -233,14 +232,14 @@ function renderGame(detailsContainer, specificItem, isLeftSide, statsClassName, 
             </div>
         </div>
         <div class="row ${statsClassName}">
+            <div class="${isLeftSide ? 'left-stat' : 'right-stat'} alert col-12" data-value=${awardsData}>
+                Awards: ${specificItem.Awards}
+            </div>
             <div class="${isLeftSide ? 'left-stat' : 'right-stat'} alert col-12" data-value=${imdbRatingData}>
                 IMDB Rating: ${specificItem.imdbRating}
             </div>
-            <div class="${isLeftSide ? 'left-stat' : 'right-stat'} alert col-12" data-value=${imdbVotesData}>
+            <div class="${isLeftSide ? 'left-stat' : 'right-stat'} alert col-12 mb-0" data-value=${imdbVotesData}>
                 IMDB Votes: ${specificItem.imdbVotes}
-            </div>
-            <div class="${isLeftSide ? 'left-stat' : 'right-stat'} alert col-12 mb-0" data-value=${awardsData}>
-                Awards: ${specificItem.Awards}
             </div>
         </div>
     `;

@@ -1,19 +1,16 @@
 // "VS" text animation on load
 const VS = document.querySelectorAll('svg path');
+// Arrays for these animatons objects incase I want to replay or reverse the animation later
 let strokeAnims = [];
 let fillAnims = [];
 for (let i = 0; i < VS.length; i++) {
     // The stroke-dasharray and the stroke-offset must start with the full length of the path
-
     // Set each letters corresponding dasharray and offset values
     // Setting stroke-dasharray to full length of path, then ofsetting it by that length aswell to make it dissapear
     let letter = VS[i];
     letter.style.strokeWidth = '2px';
     letter.style.strokeDasharray = letter.getTotalLength();
     letter.style.strokeDashoffset = letter.getTotalLength();
-
-    // #aa181f
-    // fill 500ms ease 1.4s forwards
 
     // Make keyframes and options for each letter(path)
     const keyframes1 = [
@@ -86,10 +83,13 @@ async function onInput(e) {
 
     // If items were found, proceed
     for (let item of items) {
+        // Make dropdown items and save then in variable
         const dropdownItem = makeDropdownItem(dropdown, true, item);
 
         // Add event listeners to each dropdownItem, which executes this function
         dropdownItem.addEventListener('click', async () => {
+            // Render the clicked item on the screen 
+            // and capture the object that was returned which contains info to use later
             let itemInfo = await renderItemDetails(item, dropdown, input);
             if (itemInfo.isLeftSide) {
                 leftItem = itemInfo;
@@ -111,7 +111,7 @@ async function onInput(e) {
                 input.scrollIntoView({ block: "start" });
             }
 
-            // Run comparison logic if the movies are of the same type
+            // When there are items on both sides of the screen:
             if (leftItem && rightItem) {
                 // Get stats that were on screen on click and clear their winning/losing classes
                 let leftStats = document.querySelector(`.${leftItem.statsClassName}`).children;
@@ -124,6 +124,7 @@ async function onInput(e) {
                 rightItem.item.classList.remove('loser');
                 rightItem.item.classList.remove('tie');
                 for (let i = 0; i < leftStats.length; i++) {
+                    // Edge case if statement where a movie or series and game is on screen, games have 1 less stat
                     if (leftStats[i] && rightStats[i]) {
                         leftStats[i].classList.remove('loser');
                         leftStats[i].classList.remove('winner');
@@ -134,6 +135,7 @@ async function onInput(e) {
                     }
                 }
 
+                // If items are the same type, reset points, remove any messages, play 'vs' animation and do appropriate comparison
                 if ((leftItem.type === rightItem.type)) {
                     // Reset points on next search if items are same type
                     rightPoints = 0;

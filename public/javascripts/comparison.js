@@ -27,7 +27,6 @@ function compareItems(leftItem, rightItem, searchInputs) {
     }
     // Assign overall winner
     setTimeout(() => {
-        console.log(leftPoints, rightPoints)
         // Assign winning class to overall container
         if (leftPoints > rightPoints) {
             leftItem.item.classList.add('winner');
