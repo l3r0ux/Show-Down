@@ -2,7 +2,7 @@
 https://show-vs-show.herokuapp.com/
 
 ## About this project:
-### The tech
+### The tech:
 A combinations of bootstrap and vanilla CSS was used for this projects' styling. Bootstrap mainly made the responsive design and the dropdown menu for the searchbar easier.
 Pure vanilla asynchronous JavaScript was also used to fetch data and append it to the page in real time with no page reloading.
 I also made Node.js backend to make requests from in order to hide the API key from the client side. I made use of the axios library to send requests to my Node.js backend
