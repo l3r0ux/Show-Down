@@ -1,7 +1,7 @@
 # Show-Down
 https://show-vs-show.herokuapp.com/
 
-## About this project:
+## About this project
 ### The tech:
 A combinations of bootstrap and vanilla CSS was used for this projects' styling. Bootstrap mainly made the responsive design and the dropdown menu for the searchbar easier.
 Pure vanilla asynchronous JavaScript was also used to fetch data and append it to the page in real time with no page reloading.
@@ -25,14 +25,19 @@ the color pallet for the same purpose as the above. The fact that the posters ar
 oldschool character select menu for example, with the character VS character, in this case shows or games.
 
 ## Setting up the project on your local machine:
-* Download the code from my github repo.
 * Make sure you have Node.js and git installed on your machine.
-* Run npm install to install all the node packages which the project depends on.
-* Make a '.env' file with the following contents(enter your OMDb API key where specified):
+* Download the code from my github repo.
+* Open the folder containing the code in your code editor of choice.
+* Open a git bash terminal window in the project root folder.
+* Type this command to install all the node packages which the project depends on:
+```
+npm install
+```
+* Make a '.env' file in the root directory with the following contents(enter your OMDb API key where specified):
 ```
 API_KEY="Your API Key"
 ```
-* Save the file and in your terminal, run this command to start the app:
+* Save the file, and in your terminal run this command to start the server:
 ```
 node app.js 
 ```
