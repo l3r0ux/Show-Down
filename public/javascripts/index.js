@@ -171,25 +171,39 @@ async function onInput(e) {
 
                     // If item types are movies:
                     if (leftItem.type === 'movie') {
-                        console.log('Run movie comparison function.');
                         // Disable search inputs at start of comparison process
                         let searchInputs = document.querySelectorAll('.item-search');
                         for (let input of searchInputs) {
                             input.disabled = true;
                         }
                         return setTimeout(() => {
-                            compareMovies(leftItem, rightItem, searchInputs);
+                            compareItems(leftItem, rightItem, searchInputs);
                         }, 1000)
                     }
 
                     if (leftItem.type === 'series') {
-                        return console.log('Run series comparison function.');
+                        // Disable search inputs at start of comparison process
+                        let searchInputs = document.querySelectorAll('.item-search');
+                        for (let input of searchInputs) {
+                            input.disabled = true;
+                        }
+                        return setTimeout(() => {
+                            compareItems(leftItem, rightItem, searchInputs);
+                        }, 1000)
                     }
+
                     // If it wasnt a movie or series, then it's a game
                     clearInterval(backgroundInterval);
                     cinemaBackground.classList.remove('background-image-visible')
                     gameBackground.classList.add('background-image-visible')
-                    return console.log('Run game comparison function.');
+                    // Disable search inputs at start of comparison process
+                    let searchInputs = document.querySelectorAll('.item-search');
+                    for (let input of searchInputs) {
+                        input.disabled = true;
+                    }
+                    return setTimeout(() => {
+                        compareItems(leftItem, rightItem, searchInputs);
+                    }, 1000)
                 } else {
                     // If there was a not comparable message before, remove it before add new one
                     if (document.querySelector('.not-comparable')) {

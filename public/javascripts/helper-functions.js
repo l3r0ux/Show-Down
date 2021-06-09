@@ -48,7 +48,7 @@ async function renderItemDetails(item, dropdown, input) {
         dropdown.style.transform = 'translate(-50%, 36px)';
         input.classList.add('item-present');
     }
-    
+
 
     // clear any pre-existing item details if there was a item before a new search
     if (side.children[2]) {
@@ -71,7 +71,7 @@ async function renderItemDetails(item, dropdown, input) {
             // value will be NaN if it tries to parseInt on a word and not number
             const value = parseInt(word);
             // isNaN is a built in function to check if something is a number or not
-            if(isNaN(value)) {
+            if (isNaN(value)) {
                 return prev;
             } else {
                 return prev + value;
@@ -79,9 +79,30 @@ async function renderItemDetails(item, dropdown, input) {
         }, 0);
         renderMovie(detailsContainer, specificItem, isLeftSide, statsClassName, boxOffice, imdbRating, metaScore, awards);
     } else if (item.Type === 'series') {
-        renderSeries(detailsContainer, specificItem, isLeftSide, statsClassName);
+        let totalSeasons = specificItem.totalSeasons === 'N/A' ? 0 : parseInt(specificItem.totalSeasons.replace(/\$/g, '').replace(/,/g, ''));
+        let imdbRating = specificItem.imdbRating === 'N/A' ? 0 : parseFloat(specificItem.imdbRating);
+        let imdbVotes = specificItem.imdbVotes === 'N/A' ? 0 : parseInt(specificItem.imdbVotes.replace(/\$/g, '').replace(/,/g, ''));
+        let awards = specificItem.Awards === 'N/A' ? 0 : specificItem.Awards.split(' ').reduce((prev, word) => {
+            const value = parseInt(word);
+            if (isNaN(value)) {
+                return prev;
+            } else {
+                return prev + value;
+            }
+        }, 0);
+        renderSeries(detailsContainer, specificItem, isLeftSide, statsClassName, totalSeasons, imdbRating, imdbVotes, awards);
     } else {
-        renderGame(detailsContainer, specificItem, isLeftSide, statsClassName);
+        let imdbRating = specificItem.imdbRating === 'N/A' ? 0 : parseFloat(specificItem.imdbRating);
+        let imdbVotes = specificItem.imdbVotes === 'N/A' ? 0 : parseInt(specificItem.imdbVotes.replace(/\$/g, '').replace(/,/g, ''));
+        let awards = specificItem.Awards === 'N/A' ? 0 : specificItem.Awards.split(' ').reduce((prev, word) => {
+            const value = parseInt(word);
+            if (isNaN(value)) {
+                return prev;
+            } else {
+                return prev + value;
+            }
+        }, 0);
+        renderGame(detailsContainer, specificItem, isLeftSide, statsClassName, imdbRating, imdbVotes, awards);
     }
 
     side.append(detailsContainer);
@@ -166,7 +187,7 @@ function renderMovie(detailsContainer, specificItem, isLeftSide, statsClassName,
 
 
 // function to render item if its a series
-function renderSeries(detailsContainer, specificItem, isLeftSide, statsClassName) {
+function renderSeries(detailsContainer, specificItem, isLeftSide, statsClassName, totalSeasonsData, imdbRatingData, imdbVotesData, awardsData) {
     detailsContainer.innerHTML = `
         <div class="row mb-5">
             <div class="col-5">
@@ -181,23 +202,23 @@ function renderSeries(detailsContainer, specificItem, isLeftSide, statsClassName
             </div>
         </div>
         <div class="row ${statsClassName}">
-            <div class="${isLeftSide ? 'left-stat' : 'right-stat'} alert col-12">
+            <div class="${isLeftSide ? 'left-stat' : 'right-stat'} alert col-12" data-value=${totalSeasonsData}>
                 Seasons: ${specificItem.totalSeasons}  
             </div>
-            <div class="${isLeftSide ? 'left-stat' : 'right-stat'} alert col-12">
+            <div class="${isLeftSide ? 'left-stat' : 'right-stat'} alert col-12" data-value=${imdbRatingData}>
                 IMDB Rating: ${specificItem.imdbRating}
             </div>
-            <div class="${isLeftSide ? 'left-stat' : 'right-stat'} alert col-12">
+            <div class="${isLeftSide ? 'left-stat' : 'right-stat'} alert col-12" data-value=${imdbVotesData}>
                 IMDB Votes: ${specificItem.imdbVotes}
             </div>
-            <div class="${isLeftSide ? 'left-stat' : 'right-stat'} alert col-12 mb-0">
+            <div class="${isLeftSide ? 'left-stat' : 'right-stat'} alert col-12 mb-0" data-value=${awardsData}>
                 Awards: ${specificItem.Awards}
             </div>
         </div>
     `;
 }
 
-function renderGame(detailsContainer, specificItem, isLeftSide, statsClassName) {
+function renderGame(detailsContainer, specificItem, isLeftSide, statsClassName, imdbRatingData, imdbVotesData, awardsData) {
     detailsContainer.innerHTML = `
         <div class="row mb-5">
             <div class="col-5">
@@ -212,13 +233,13 @@ function renderGame(detailsContainer, specificItem, isLeftSide, statsClassName) 
             </div>
         </div>
         <div class="row ${statsClassName}">
-            <div class="${isLeftSide ? 'left-stat' : 'right-stat'} alert col-12">
+            <div class="${isLeftSide ? 'left-stat' : 'right-stat'} alert col-12" data-value=${imdbRatingData}>
                 IMDB Rating: ${specificItem.imdbRating}
             </div>
-            <div class="${isLeftSide ? 'left-stat' : 'right-stat'} alert col-12">
+            <div class="${isLeftSide ? 'left-stat' : 'right-stat'} alert col-12" data-value=${imdbVotesData}>
                 IMDB Votes: ${specificItem.imdbVotes}
             </div>
-            <div class="${isLeftSide ? 'left-stat' : 'right-stat'} alert col-12 mb-0">
+            <div class="${isLeftSide ? 'left-stat' : 'right-stat'} alert col-12 mb-0" data-value=${awardsData}>
                 Awards: ${specificItem.Awards}
             </div>
         </div>

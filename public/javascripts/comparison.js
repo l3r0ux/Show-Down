@@ -1,9 +1,8 @@
 // Function to compare movies - increment leftPoints or rightPoints depending on which stat won
-function compareMovies(leftItem, rightItem, searchInputs) {
+function compareItems(leftItem, rightItem, searchInputs) {
     // Get individual stats to assign winner or loser classes for newly added items
     leftStats = document.querySelector(`.${leftItem.statsClassName}`).children;
     rightStats = document.querySelector(`.${rightItem.statsClassName}`).children;
-    console.log(leftStats, rightStats)
     // Timings for animations
     // Only change 'statCompareDelay', and the other delays will be autimatically calculated depending on it
     const statCompareDelay = 500;
