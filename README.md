@@ -7,6 +7,7 @@ A combinations of bootstrap and vanilla CSS was used for this projects' styling.
 Pure vanilla asynchronous JavaScript was also used to fetch data and append it to the page in real time with no page reloading.
 I also made Node.js backend to make requests from in order to hide the API key from the client side. I made use of the axios library to send requests to my Node.js backend
 which then also send requests with axios to fetch data from the OMDb API, and send that to the front end again.
+
 There is also a debounce function on the input, that forces the request to be delayed by 1 second before it is sent.
 Regular expressions are used to extract the data to get in a comparable format, then the comparison is run. The stats and items that wins is colored in differently than the one that lost.
 All the animations were done with the Javascript Web Animations API, not with CSS.
